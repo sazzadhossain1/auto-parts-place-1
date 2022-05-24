@@ -20,6 +20,15 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+    await client.connect();
+    const serviceCollection = client.db("autoParts").collection("product");
+
+    app.get("/product", async (req, res) => {
+      const query = {};
+      const cursor = serviceCollection.find(query);
+      const services = await cursor.toArray();
+      res.send(services);
+    });
   } finally {
   }
 }
