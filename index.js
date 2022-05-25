@@ -23,12 +23,20 @@ async function run() {
     await client.connect();
     const serviceCollection = client.db("autoParts").collection("product");
     const orderCollection = client.db("autoParts").collection("order");
+    const reviewCollection = client.db("reviewUser").collection("review");
 
     app.get("/product", async (req, res) => {
       const query = {};
       const cursor = serviceCollection.find(query);
       const services = await cursor.toArray();
       res.send(services);
+    });
+
+    app.get("/review", async (req, res) => {
+      const query = {};
+      const cursor = reviewCollection.find(query);
+      const reviews = await cursor.toArray();
+      res.send(reviews);
     });
 
     app.post("/order", async (req, res) => {
