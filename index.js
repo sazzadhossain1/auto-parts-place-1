@@ -26,6 +26,7 @@ async function run() {
     const serviceCollection = client.db("autoParts").collection("product");
     const orderCollection = client.db("autoParts").collection("order");
     const reviewCollection = client.db("reviewUser").collection("review");
+    const profileCollection = client.db("reviewUser").collection("profile");
 
     app.get("/product", async (req, res) => {
       const query = {};
@@ -73,6 +74,12 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const service = await serviceCollection.findOne(query);
       res.send(service);
+    });
+
+    app.post("/profile", async (req, res) => {
+      const user = req.body;
+      const result = await profileCollection.insertOne(user);
+      res.send(result);
     });
   } finally {
   }
